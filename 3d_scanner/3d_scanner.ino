@@ -3,10 +3,11 @@
 
 #include <Servo.h>
 
-//Pin Setup
-int IRSensor = A0; 
-int servo1Pin = A1;
-int servo2Pin = A2;  
+
+const uint8_t IRSensor = A0; 
+const uint8_t servo1Pin = A1;
+const uint8_t servo2Pin = A2;  
+
 int outputValue = 0; 
 
 //Servo Setup
@@ -26,7 +27,7 @@ void setup() {
   servo1.attach(servo1Pin); 
   servo2.attach(servo2Pin); 
 
-  Serial.begin(9600); //baud rate: 9600 bits per second
+  Serial.begin(115200); //baud rate: 115200 bits per second
 }
 
 void loop() {
@@ -42,7 +43,6 @@ void loop() {
 
   //Testing that IR sensor works:
   sensorOutput = analogRead(IRSensor);
-  outputValue = map(sensorOutput, 0, 1023, 1.8, 2.3);  
   Serial.println(outputValue); 
   delay(500); 
 }
