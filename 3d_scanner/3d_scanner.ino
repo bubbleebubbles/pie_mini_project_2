@@ -3,10 +3,11 @@
 
 #include <Servo.h>
 
-//Pin Setup
+
 const uint8_t IRSensor = A0; 
 const uint8_t servo1Pin = A1;
 const uint8_t servo2Pin = A2;  
+
 int outputValue = 0; 
 
 //Servo Setup
