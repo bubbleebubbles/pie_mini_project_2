@@ -23,4 +23,13 @@ def polar_to_cartesian(distance, inclination, azimuth):
 
 def sensor_to_distance(sensor_reading):
     #include the calibration function here
+    '''
+    Converts serial data to distance data. 
 
+    Args:
+        sensor_reading: Array of values that the sensor inputs. 
+    Returns: 
+        distance_data: Array of values  
+    '''
+    distance_data = -0.2119 * sensor_reading + 113.5
+    return(distance_data)
