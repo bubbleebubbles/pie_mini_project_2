@@ -5,9 +5,9 @@
 
 //Pin Setup
 #define IR A0
-#define SERVO_INCLINATION A1
-#define SERVO_AZIMUTH A2
-#define START_BUTTON 13
+#define SERVO_INCLINATION 9
+#define SERVO_AZIMUTH 10
+#define START_BUTTON 12
 
 int start_time = millis();
 const int interval = 1000; 
@@ -34,16 +34,23 @@ void setup() {
 }
 
 void loop() {
-while (digitalRead(START_BUTTON)== LOW){
-  }
-//Sensor will read left to right for each 4 degree increase in the vertical angle. 
-  for (servo_incl_pos = 0; servo_incl_pos <= 180; servo_incl_pos+=4){
-    for (servo_az_pos = 0; servo_az_pos <= 180; servo_az_pos+=4){
-      delay(10);
+//  while (digitalRead(START_BUTTON)== LOW){}
+
+  
+//Sensor will read left to right for each 1 degree increase in the vertical angle. 
+  for (servo_incl_pos = 120; servo_incl_pos >= 20; servo_incl_pos-=4){
+    servo_inclination.write(servo_incl_pos);
+    for (servo_az_pos = 60; servo_az_pos <= 160; servo_az_pos+=4){
+      servo_azimuth.write(servo_az_pos);
+      delay(100);
       if (it_is_time(millis(), start_time, interval)){
-        Serial.println(clean_reading(analogRead(IR), analogRead(IR), analogRead(IR))); //IR sensor data given the two angles. 
+        Serial.print("Servo Reading:");
+        Serial.println(clean_reading(analogRead(IR), analogRead(IR), analogRead(IR))); //IR sensor data given the two angles.
+        Serial.print("Inclination:");
         Serial.println(servo_incl_pos); //vertical angle in degrees
+        Serial.print("Azimuth:");
         Serial.println(servo_az_pos); //horizonal angle in degrees
+        delay(100);
       }
     }
   }

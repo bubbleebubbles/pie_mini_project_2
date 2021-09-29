@@ -6,18 +6,16 @@ const int interval = 1000;
 int IR_clean; // Clean reading from IR sensor. 
 
 void setup(){ 
-  // put your setup code here, to run once:
   //Initialize pins:
   pinMode(IR, INPUT);
   Serial.begin(115200); //baud rate: 115200 bits per second
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-//Sensor will read left to right for each 4 degree increase in the vertical angle. 
   if (it_is_time(millis(), start_time, interval)){
-    delay(10);
+    Serial.print("IR Reading:");
     Serial.println(clean_reading(analogRead(IR), analogRead(IR), analogRead(IR))); //IR sensor data given the two angles. 
+    delay(1000);
 }
 }
 bool it_is_time(uint32_t t, uint32_t t0, uint32_t dt){
