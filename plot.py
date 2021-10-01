@@ -20,8 +20,6 @@ x = sensor_data['x'].values
 y = sensor_data['y'].values
 z = sensor_data['z'].values
 
-print(x)
-
 #Plot the data
 axes.scatter(x, y, z)
 plt.show()

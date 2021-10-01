@@ -37,7 +37,7 @@ void loop() {
 
   delay(2500);
   
-  //Sensor will read left to right for each 4 degree increase in the vertical angle. 
+  //Sensor will read right to left for each 4 degree increase in the vertical angle. 
   for (servo_pitch_pos = 120; servo_pitch_pos >= 20; servo_pitch_pos-=4){
     servo_pitch.write(servo_pitch_pos);
     for (servo_yaw_pos = 60; servo_yaw_pos <= 160; servo_yaw_pos+=4){

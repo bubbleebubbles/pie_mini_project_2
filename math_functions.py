@@ -37,6 +37,16 @@ def sensor_to_distance(sensor_reading):
 
 
 def apply_motor_correction(measured_angle, center_angle, negative_90_deg_angle):
+    '''
+    Correct the measured angle to the correct reference frame. 
+    Args:
+        measured angle: the measured angle of the servo in degrees
+        center_angle: the angle determined to be the center angle of the servo
+        in degrees
+    Returns:
+        the corrected servo angle in degrees. 
+
+    '''
     measured_from_center = measured_angle - center_angle
     pcnt_90_from_center = measured_from_center / (center_angle - negative_90_deg_angle)
     degrees_from_center = pcnt_90_from_center * 90
