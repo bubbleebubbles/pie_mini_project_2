@@ -5,20 +5,20 @@
 
 //Pin Setup
 #define IR A0
-#define SERVO_INCLINATION 9
-#define SERVO_AZIMUTH 10
+#define SERVO_PITCH 9
+#define SERVO_YAW 10
 #define START_BUTTON 12
 
 int start_time = millis();
 const int interval = 1000; 
 
 //Servo Setup
-Servo servo_inclination; 
-Servo servo_azimuth;
+Servo servo_pitch; 
+Servo servo_yaw;
 
 //Variables:
-int servo_incl_pos = 0; //vertical angle of sensor (degrees)
-int servo_az_pos = 0; //horizonal angle of sensor (degrees)
+int servo_pitch_pos = 0; //vertical angle of sensor (degrees)
+int servo_yaw_pos = 0; //horizonal angle of sensor (degrees)
 
 int IR_clean; // Clean reading from IR sensor. 
 
@@ -27,34 +27,36 @@ void setup() {
   //Initialize pins:
   pinMode(IR, INPUT);
   pinMode(START_BUTTON, INPUT); 
-  servo_inclination.attach(SERVO_INCLINATION); 
-  servo_azimuth.attach(SERVO_AZIMUTH); 
+  servo_pitch.attach(SERVO_PITCH); 
+  servo_yaw.attach(SERVO_YAW); 
 
   Serial.begin(115200); //baud rate: 115200 bits per second
 }
 
 void loop() {
-//  while (digitalRead(START_BUTTON)== LOW){}
 
+  delay(2500);
   
-//Sensor will read left to right for each 1 degree increase in the vertical angle. 
-  for (servo_incl_pos = 120; servo_incl_pos >= 20; servo_incl_pos-=4){
-    servo_inclination.write(servo_incl_pos);
-    for (servo_az_pos = 60; servo_az_pos <= 160; servo_az_pos+=4){
-      servo_azimuth.write(servo_az_pos);
+  //Sensor will read left to right for each 4 degree increase in the vertical angle. 
+  for (servo_pitch_pos = 120; servo_pitch_pos >= 20; servo_pitch_pos-=4){
+    servo_pitch.write(servo_pitch_pos);
+    for (servo_yaw_pos = 60; servo_yaw_pos <= 160; servo_yaw_pos+=4){
+      servo_yaw.write(servo_yaw_pos);
       delay(100);
       if (it_is_time(millis(), start_time, interval)){
-        Serial.print("Servo Reading:");
-        Serial.println(clean_reading(analogRead(IR), analogRead(IR), analogRead(IR))); //IR sensor data given the two angles.
-        Serial.print("Inclination:");
-        Serial.println(servo_incl_pos); //vertical angle in degrees
-        Serial.print("Azimuth:");
-        Serial.println(servo_az_pos); //horizonal angle in degrees
+//        Serial.print("");
+        Serial.print(clean_reading(analogRead(IR), analogRead(IR), analogRead(IR))); //IR sensor data given the two angles. 
+        Serial.print(",");
+        Serial.print(servo_pitch_pos); //vertical angle in degrees
+        Serial.print(",");
+        Serial.println(servo_yaw_pos); //horizonal angle in degrees
         delay(100);
       }
     }
-  }
+  }    
 }
+
+
 
 
 bool it_is_time(uint32_t t, uint32_t t0, uint32_t dt){
